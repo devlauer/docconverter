@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9.0</version>
 	<properties>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -38,7 +36,7 @@
 		<connection>scm:git:ssh://git@github.com/devlauer/docconverter.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/devlauer/docconverter.git</developerConnection>
 		<url>https://github.com/devlauer/docconverter/tree/master</url>
-		<tag>HEAD</tag>
+		<tag>docconverter-0.9.0</tag>
 	</scm>
 
 	<distributionManagement>
