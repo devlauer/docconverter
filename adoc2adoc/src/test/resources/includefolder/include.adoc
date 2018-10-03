@@ -1,0 +1,9 @@
+
+This file contains normal asciidoc content and a diagram
+[plantuml,test]
+....
+actor test1
+actor test2
+
+test1 -> test2
+....

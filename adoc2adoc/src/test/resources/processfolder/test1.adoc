@@ -1,0 +1,9 @@
+
+
+include::../includefolder/include.adoc[] 
+
+include::../includefolder/includetag.adoc[tag=testtag]
+
+This is another test
+
+include::./test2.adoc[] 

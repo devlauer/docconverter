@@ -1,0 +1,5 @@
+This is an example of an asciidoc file with a tag inside
+
+// tag::testtag[]
+some text inside the tag
+// end::testtag[]

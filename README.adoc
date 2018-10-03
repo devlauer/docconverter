@@ -1,0 +1,220 @@
+= docconverter project
+
+== Description 
+
+docconverter is a universal Java library which helps to convert 
+from one document format to another document format. 
+This is achieved by delegating the conversion process to other
+Java libraries which understand concrete parts of this conversion 
+for one special document format.
+
+.The docconverter project itself consists of 
+- an api, which standardizes all classes needed for the conversion process
+- several implementations, which are used by the api classes and do the 
+concrete conversion if they are dropped into the classpath
+- a maven plugin, which helps to use this library during a maven build process
+
+== Usage library
+
+The api of this library is a fluent api. You simply need to obtain an instance 
+of the ConversionJobFactory create a conversion job, add your input streams or
+files, declare your input MIME type, declare your wanted output MIME type and 
+start conversion. E.g.:
+[source,java]
+----
+ConversionJobFactory.getInstance()
+.createEmptyConversionJob()
+.fromStreams(inputList)
+.fromMimeType(MimeTypeConstants.APPLICATION_XHTML)
+.toMimeType(MimeTypeConstants.APPLICATION_PDF).convert(); 
+----
+You will get a Future<asdfasdf
+If your conversion is not supported a ConversionException will be thrown.
+
+To use this library you need to add the docconverter-api.jar 
+and the concrete api implementation jar for your wanted MIME type mapping
+including all dependencies to your classpath. For example you need to add 
+the docconverter-html2pdf.jar and its dependencies to your classpath if 
+you want to convert from html to pdf.
+
+If you use maven as build tool this is easy, just add the api
+[source, xml]
+----
+<dependency>
+	<groupId>de.elnarion.util</groupId>
+	<artifactId>docconverter-api</artifactId>
+	<version>0.9.0</version>
+</dependency>		
+----
+and the needed implementation, e.g.
+[source, xml]
+----
+<dependency>
+	<groupId>de.elnarion.util</groupId>
+	<artifactId>docconverter-html2pdf</artifactId>
+	<version>0.9.0</version>
+</dependency>		
+----
+to your pom.xml
+
+== Usage maven plugin
+
+If you want to use the docconverter maven plugin for conversions during a maven build, 
+you need to configure this plugin as any normal maven plugin as part of your build and 
+add this plugin specific configuration:
+
+
+* outputDirectory -  
+  the target folder where all resulting files are written; defaults to target/generated-docs
+* sourceDirectory - 
+  the folder where all input files are located (including all subfolders); defaults to /src/main/doc
+* sourceMimeType -
+  the MIME type of all input files
+* targetMimeType - 
+  the MIME type of all output files
+* outputFileending -
+  the file extension used for all target filenames
+* sourceDocumentExtensions -
+  a comma separated list used for filtering all files of the source directory by their file extension
+* sourceDocument -
+  optional parameter which can be used to convert only one single file
+* conversionParameters -
+  optional parameters which are passed to the concrete conversion implementation
+  
+For each requested document conversion you need to add the concrete docconverter implementation as plugin dependency.
+
+[source, xml]
+----
+<plugin>
+	<artifactId>docconverter-maven-plugin</artifactId>
+	<groupId>de.elnarion.maven</groupId>
+	<version>0.0.9</version>
+	<executions>
+		<execution>
+			<id>some-id</id>
+			<phase>wanted maven phase</phase>
+			<goals>
+				<goal>convert</goal>
+			</goals>
+			<configuration>
+				<outputDirectory>wanted target directory</outputDirectory>
+				<sourceDirectory>directory of all input files</sourceDirectory>
+				<sourceMimeType>input MIME type</sourceMimeType>
+				<targetMimeType>output MIME type</targetMimeType>
+				<outputFileending>output extension</outputFileending>
+				<sourceDocumentExtensions>input extension for filtering files, e.g. html</sourceDocumentExtensions>
+			</configuration>
+		</execution>
+		<dependencies>
+		<dependency>
+			<groupId>de.elnarion.util</groupId>
+			<artifactId>docconverter-someimplementation</artifactId>
+			<version>0.0.9</version>
+		</dependency>
+	</dependencies>
+</plugin>
+----
+
+Here is an example of a Maven project (pom.xml) which uses this maven plugin to convert all 
+xhtml files in the src/main/testfiles folder to pdf files in the target folder target/xhtml2pdf:
+
+[source, xml]
+----
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.elnarion.sample</groupId>
+	<artifactId>sample.maventest</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>docconverter-maven-plugin</artifactId>
+				<groupId>de.elnarion.maven</groupId>
+				<version>0.0.9-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>html2pdf</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>convert</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/xhtml2pdf</outputDirectory>
+							<sourceDirectory>${basedir}/src/main/testfiles</sourceDirectory>
+							<sourceMimeType>application/xhtml+xml</sourceMimeType>
+							<targetMimeType>application/pdf</targetMimeType>
+							<outputFileending>pdf</outputFileending>
+							<sourceDocumentExtensions>xhtml</sourceDocumentExtensions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>adoc2adoc</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>convert</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/adoc</outputDirectory>
+							<sourceDirectory>${basedir}/src/main/testfiles</sourceDirectory>
+							<sourceMimeType>text/x.asciidoc</sourceMimeType>
+							<targetMimeType>text/x.asciidoc</targetMimeType>
+							<outputFileending>adoc</outputFileending>
+							<sourceDocumentExtensions>adoc</sourceDocumentExtensions>
+							<conversionParameters>
+								<adoc2adoc.remain_include_statement_regexp>.*include\:\:\.\/.*\[\].*</adoc2adoc.remain_include_statement_regexp>
+							</conversionParameters>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>de.elnarion.util</groupId>
+						<artifactId>docconverter-html2pdf</artifactId>
+						<version>0.0.9</version>
+					</dependency>
+					<dependency>
+						<groupId>de.elnarion.util</groupId>
+						<artifactId>docconverter-adoc2adoc</artifactId>
+						<version>0.0.9</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+----
+
+
+== Supported conversions
+
+This project currently supports the following MIME type conversions:
+
+
+* _text/html_, _application/xhtml+xml_ to _application/pdf_ via *_docconverter-html2pdf_*
+* _application/pdf_ to _image/jpeg_ via *_docconverter-pdf2jpg_*
+* _text/x.asciidoc_ to _text/x.asciidoc_ (includes all included separate files directly in 
+your target file) via *_docconverter-adoc2adoc_*
+
+== Licensing
+
+This software is licensed under the http://www.apache.org/licenses/LICENSE-2.0.html[Apache Licence, Version 2.0]. 
+Note that docconverter has several dependencies which are not licensed under the Apache License. 
+Note that using docconverter comes without any (legal) warranties.
+
+== Versioning
+
+This plugin uses sematic versioning. For more information refer to http://semver.org/[semver].
+
+== Changelog
+
+This plugin has a dedicated Changelog.
+
+== Reporting bugs and feature requests
+
+Use GitHub issues to create your issues.
+
+== Source
+
+Latest and greatest source of docconverter can be found on https://github.com/devlauer/docconverter[GitHub]. Fork it!
