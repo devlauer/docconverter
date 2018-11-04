@@ -43,7 +43,7 @@ If you use maven as build tool this is easy, just add the api
 <dependency>
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter-api</artifactId>
-	<version>0.9.0</version>
+	<version>0.9.3</version>
 </dependency>		
 ----
 and the needed implementation, e.g.
@@ -52,7 +52,7 @@ and the needed implementation, e.g.
 <dependency>
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter-html2pdf</artifactId>
-	<version>0.9.0</version>
+	<version>0.9.3</version>
 </dependency>		
 ----
 to your pom.xml

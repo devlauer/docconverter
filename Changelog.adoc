@@ -3,6 +3,10 @@
 .unreleased
 * nothing
 
+.0.9.3 - 2018-11-04
+* Added base directory url conversion parameter to be able to include local images
+* Fixed duplicate processing of a file in maven plugin
+
 .0.9.2 - 2018-10-31
 * Fixed compatibility issue with maven 3.3.9
 

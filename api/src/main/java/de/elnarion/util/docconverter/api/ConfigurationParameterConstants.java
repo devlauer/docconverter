@@ -14,4 +14,10 @@ public class ConfigurationParameterConstants {
 	 */
 	public static final String INPUT_CHARSET_KEY = "input.charset";
 
+	/**
+	 * The Constant BASE_DIRECTORY is used to set the relative directory of
+	 * referenced images etc..
+	 */
+	public static final String BASE_DIRECTORY_URL = "input.basedirectory.url";
+
 }

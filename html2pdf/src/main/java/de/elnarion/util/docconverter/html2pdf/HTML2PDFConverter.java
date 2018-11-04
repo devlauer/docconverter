@@ -127,7 +127,13 @@ public class HTML2PDFConverter implements DocConverter {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		// we need to create the target PDF
 		// we'll create one page per input string, but we call layout for the first
-		renderer.setDocumentFromString(xhtmlString);
+		if (configurationParameters != null
+				&& configurationParameters.containsKey(ConfigurationParameterConstants.BASE_DIRECTORY_URL)) {
+			renderer.setDocumentFromString(xhtmlString,
+					(String) configurationParameters.get(ConfigurationParameterConstants.BASE_DIRECTORY_URL));
+		} else {
+			renderer.setDocumentFromString(xhtmlString);
+		}
 		renderer.layout();
 		renderer.createPDF(baos, false);
 		renderer.finishPDF();

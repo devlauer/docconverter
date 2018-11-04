@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -22,10 +22,10 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
+import de.elnarion.util.docconverter.api.ConfigurationParameterConstants;
 import de.elnarion.util.docconverter.api.ConversionJobFactory;
 import de.elnarion.util.docconverter.api.ConversionJobWithInputUnspecified;
 import de.elnarion.util.docconverter.api.exception.ConversionException;
-import de.elnarion.util.docconverter.spi.DocConverterProvider;
 
 /**
  * The Class DocConverterMojo.
@@ -84,22 +84,6 @@ public class DocConverterMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		getLog().info("Starting conversion from " + sourceMimeType + " to " + targetMimeType);
-		getLog().info("load Services Thread Classloader");
-		ServiceLoader<DocConverterProvider> dcpsl = ServiceLoader.load(DocConverterProvider.class,
-				Thread.currentThread().getContextClassLoader());
-		for (DocConverterProvider provider : dcpsl) {
-			getLog().info(provider.getClass().getName());
-		}
-		getLog().info("load Services Class Classloader");
-		dcpsl = ServiceLoader.load(DocConverterProvider.class, this.getClass().getClassLoader());
-		for (DocConverterProvider provider : dcpsl) {
-			getLog().info(provider.getClass().getName());
-		}
-		getLog().info("load Services System Classloader");
-		dcpsl = ServiceLoader.load(DocConverterProvider.class, ClassLoader.getSystemClassLoader());
-		for (DocConverterProvider provider : dcpsl) {
-			getLog().info(provider.getClass().getName());
-		}
 		basePath = sourceDirectory.getPath();
 		try {
 			if (sourceDocument != null) {
@@ -124,6 +108,7 @@ public class DocConverterMojo extends AbstractMojo {
 	 */
 	private void writeResult(File sourceDocument2, Future<List<InputStream>> result) throws MojoFailureException {
 		String path = sourceDocument2.getParent();
+		getLog().debug("Writing result of " + sourceDocument2.getAbsolutePath());
 		String filePath = sourceDocument2.getPath();
 		String filename = filePath.substring(path.length() + 1, filePath.length());
 		String filenameWithoutExtension = filename.lastIndexOf('.') > 0
@@ -177,6 +162,12 @@ public class DocConverterMojo extends AbstractMojo {
 		}
 		Map<File, Future<List<InputStream>>> conversionMap = new HashMap<>();
 		convertDirectory(sourceDirectory, conversionMap);
+		getLog().debug("Size conversion Map" + conversionMap.size());
+		Set<Entry<File, Future<List<InputStream>>>> conversionEntries = conversionMap.entrySet();
+		for (Entry<File, Future<List<InputStream>>> entry : conversionEntries) {
+			getLog().debug("Writing entry result");
+			writeResult(entry.getKey(), entry.getValue());
+		}
 	}
 
 	/**
@@ -201,15 +192,11 @@ public class DocConverterMojo extends AbstractMojo {
 
 				if (sourceDocumentExtensions == null || sourceDocumentExtensions.isEmpty()
 						|| sourceDocumentExtensions.contains(fileExtension)) {
-					getLog().info("Starting conversion of " + directoryFile.getName());
+					getLog().info("Starting conversion of " + directoryFile.getAbsolutePath());
 					Future<List<InputStream>> result = convertFile(directoryFile);
 					paramConversionMap.put(directoryFile, result);
 				}
 			}
-		}
-		Set<Entry<File, Future<List<InputStream>>>> conversionEntries = paramConversionMap.entrySet();
-		for (Entry<File, Future<List<InputStream>>> entry : conversionEntries) {
-			writeResult(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -221,15 +208,35 @@ public class DocConverterMojo extends AbstractMojo {
 	 * @throws ConversionException the conversion exception
 	 */
 	private Future<List<InputStream>> convertFile(File paramSourceDocument) throws ConversionException {
+		getLog().debug("configsetting");
 		ConversionJobWithInputUnspecified conversionJob = null;
+		Map<String, Object> config = new HashMap<>();
 		if (conversionParameters != null) {
-			conversionJob = ConversionJobFactory.getInstance().createEmptyConversionJob(conversionParameters);
-		} else {
-			conversionJob = ConversionJobFactory.getInstance().createEmptyConversionJob();
+			getLog().debug("configsetting all");
+			config.putAll(conversionParameters);
 		}
-		List<File> sourceFiles = new ArrayList<>();
-		sourceFiles.add(paramSourceDocument);
-		return conversionJob.fromFiles(sourceFiles).fromMimeType(sourceMimeType).toMimeType(targetMimeType).convert();
+		getLog().debug("configsetting update");
+		if (config.containsKey(ConfigurationParameterConstants.BASE_DIRECTORY_URL)) {
+			String directory = (String) config.get(ConfigurationParameterConstants.BASE_DIRECTORY_URL);
+			getLog().debug("configsetting" + directory);
+			config.put(ConfigurationParameterConstants.BASE_DIRECTORY_URL, directory.replaceAll("\\", "/"));
+			getLog().debug(
+					"Fixed base directory URL to " + config.get(ConfigurationParameterConstants.BASE_DIRECTORY_URL));
+		} else if (paramSourceDocument != null) {
+			try {
+				getLog().debug("configsetting" + paramSourceDocument.getParentFile().toURI().toURL());
+				config.put(ConfigurationParameterConstants.BASE_DIRECTORY_URL,
+						paramSourceDocument.getParentFile().toURI().toURL().toString());
+			} catch (MalformedURLException e) {
+				getLog().error(e);
+			}
+		}
+		conversionJob = ConversionJobFactory.getInstance().createEmptyConversionJob(config);
+
+		List<File> conversionSourceFiles = new ArrayList<>();
+		conversionSourceFiles.add(paramSourceDocument);
+		return conversionJob.fromFiles(conversionSourceFiles).fromMimeType(sourceMimeType).toMimeType(targetMimeType)
+				.convert();
 	}
 
 	/**
