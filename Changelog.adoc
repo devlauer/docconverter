@@ -3,6 +3,10 @@
 .unreleased
 * nothing
 
+.0.10.0 - 2018-11-10
+* Fixed internal html2xhtml conversion in html2pdf converter
+* Added new html2docx converter
+
 .0.9.3 - 2018-11-04
 * Added base directory url conversion parameter to be able to include local images
 * Fixed duplicate processing of a file in maven plugin

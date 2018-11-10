@@ -194,8 +194,11 @@ This project currently supports the following MIME type conversions:
 
 * _text/html_, _application/xhtml+xml_ to _application/pdf_ via *_docconverter-html2pdf_*
 * _application/pdf_ to _image/jpeg_ via *_docconverter-pdf2jpg_*
-* _text/x.asciidoc_ to _text/x.asciidoc_ (includes all included separate files directly in 
+* _text/x.asciidoc_ to _text/x.asciidoc_ (includes all included separate files directly in
 your target file) via *_docconverter-adoc2adoc_*
+* _text/html, _application/xhtml+xml_ to _application/vnd.openxmlformats-officedocument.wordprocessingml.document_ 
+via *_documentconverter-html2docx_* 
+
 
 == Licensing
 
