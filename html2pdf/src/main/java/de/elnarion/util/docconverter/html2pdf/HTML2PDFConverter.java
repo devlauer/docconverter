@@ -94,9 +94,9 @@ public class HTML2PDFConverter implements DocConverter {
 			throws ConversionException {
 
 		if (MimeTypeConstants.APPLICATION_XHTML.equals(paramSourceMimeType)) {
-			return convertHTMLToPDFInputStream(source);
-		} else if (MimeTypeConstants.TEXT_HTML.equals(paramSourceMimeType)) {
 			return convertXHTMLToPDFInputStream(source);
+		} else if (MimeTypeConstants.TEXT_HTML.equals(paramSourceMimeType)) {
+			return convertHTMLToPDFInputStream(source);
 		}
 		return null;
 	}
