@@ -59,6 +59,7 @@
 		<module>api</module>
 		<module>testsupport</module>
 		<module>html2pdf</module>
+		<module>html2docx</module>
 		<module>pdf2jpg</module>
 		<module>adoc2adoc</module>
 		<module>all</module>
