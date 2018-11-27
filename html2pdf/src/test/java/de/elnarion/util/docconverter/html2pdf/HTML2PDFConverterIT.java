@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import org.apache.sanselan.util.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import de.elnarion.util.docconverter.api.ConversionJobFactory;
@@ -38,7 +38,7 @@ public class HTML2PDFConverterIT extends BasicDocConverterIT {
 		Future<List<InputStream>> result = converter.convertStreams(inputList, MimeTypeConstants.APPLICATION_XHTML,
 				MimeTypeConstants.APPLICATION_PDF);
 		InputStream os = result.get().iterator().next();
-		checkPDFBytes(IOUtils.getInputStreamBytes(os));
+		checkPDFBytes(IOUtils.toByteArray(os));
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class HTML2PDFConverterIT extends BasicDocConverterIT {
 		Future<List<InputStream>> result = converter.convertStreams(inputList, MimeTypeConstants.TEXT_HTML,
 				MimeTypeConstants.APPLICATION_PDF);
 		InputStream os = result.get().iterator().next();
-		checkPDFBytes(IOUtils.getInputStreamBytes(os));
+		checkPDFBytes(IOUtils.toByteArray(os));
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class HTML2PDFConverterIT extends BasicDocConverterIT {
 				.fromStreams(inputList).fromMimeType(MimeTypeConstants.APPLICATION_XHTML)
 				.toMimeType(MimeTypeConstants.APPLICATION_PDF).convert();
 		InputStream os = result.get().iterator().next();
-		checkPDFBytes(IOUtils.getInputStreamBytes(os));
+		checkPDFBytes(IOUtils.toByteArray(os));
 	}
 
 }
