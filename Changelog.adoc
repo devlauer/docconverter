@@ -3,6 +3,18 @@
 .unreleased
 * nothing
 
+
+.1.0.1 - 2022-09-25
+* set major version to 1.0 because previous versions have proven their stability
+* updated commons-io to 2.11.0
+* updated asciidoctorj to 2.5.6
+* updated docx4j-JAXB-ReferenceImpl and docx4j-ImportXHTML to 8.3.8
+* updated poi-ooxml to 5.2.3
+* updated flying-saucer-pdf-openpdf to 9.1.22
+* updated pdfbox-tools to 3.0.0-RC1
+* updated junit to 4.13.2
+
+
 .0.10.0 - 2018-11-10
 * Fixed internal html2xhtml conversion in html2pdf converter
 * Added new html2docx converter

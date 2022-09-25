@@ -18,7 +18,6 @@ public class Preprocessor extends org.asciidoctor.extension.Preprocessor {
 	 * Instantiates a new preprocessor.
 	 */
 	public Preprocessor() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -31,12 +30,11 @@ public class Preprocessor extends org.asciidoctor.extension.Preprocessor {
 	}
 
 	@Override
-	public PreprocessorReader process(Document document, PreprocessorReader reader) {
+	public void process(Document document, PreprocessorReader reader) {
 		if (contentLines == null) {
 			contentLines = reader.readLines();
 			
 		}
-		return reader;
 	}
 
 	/**

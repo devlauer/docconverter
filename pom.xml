@@ -3,7 +3,7 @@
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter</artifactId>
 	<packaging>pom</packaging>
-	<version>0.10.1-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>library and maven plugin project for document conversion</description>
 	<url>https://github.com/devlauer/docconverter</url>
@@ -11,7 +11,7 @@
 	<properties>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>4.13.1</junit.version>
+		<junit.version>4.13.2</junit.version>
 	</properties> 
 
 	<issueManagement>

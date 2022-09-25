@@ -19,6 +19,7 @@ import org.apache.commons.io.IOUtils;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.Asciidoctor.Factory;
 import org.asciidoctor.Options;
+import org.asciidoctor.OptionsBuilder;
 import org.asciidoctor.SafeMode;
 import org.asciidoctor.extension.ExtensionGroup;
 
@@ -112,9 +113,7 @@ public class Adoc2AdocDocConverter implements DocConverter {
 		ExtensionGroup group = asciidoctor.createGroup();
 		Preprocessor preprocessor = new Preprocessor();
 		group.preprocessor(preprocessor);
-		Options options = new Options();
-		options.setToFile(false);
-		options.setSafe(SafeMode.UNSAFE);
+		Options options = Options.builder().safe(SafeMode.UNSAFE).toFile(false).build();
 		group.register();
 		for (File file : source) {
 			inputStreams.add(processSingleFile(file, asciidoctor, group, preprocessor, options));

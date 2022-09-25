@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -82,7 +83,7 @@ public class PDF2JPGConverter implements DocConverter {
 		List<InputStream> resultList = new ArrayList<>();
 		try {
 			System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-			PDDocument document = PDDocument.load(source);
+			PDDocument document = Loader.loadPDF(source);
 			PDFRenderer pdfRenderer = new PDFRenderer(document);
 			for (int page = 0; page < document.getNumberOfPages(); ++page) {
 				baos = new ByteArrayOutputStream();
