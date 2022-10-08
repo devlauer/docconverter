@@ -1,6 +1,7 @@
 = Changelog
 
 .unreleased
+* add maven parent elnarion-parent-pom
 * fixed several SonarQube hints
 * updated indirect dependency logback-classic to 1.4.3
 * updated indirect dependency logback-core to 1.4.3
