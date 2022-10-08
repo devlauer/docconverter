@@ -1,6 +1,7 @@
 = Changelog
 
 .unreleased
+* switch to java 8 as compiler version
 * add maven parent elnarion-parent-pom
 * fixed several SonarQube hints
 * updated indirect dependency logback-classic to 1.4.3
