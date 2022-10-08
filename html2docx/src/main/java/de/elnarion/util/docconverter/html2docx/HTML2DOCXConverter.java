@@ -41,7 +41,6 @@ public class HTML2DOCXConverter extends AbstractBaseConverter {
 
 	private static Map<String, Set<String>> supportedMimetypes = null;
 
-	private Map<String, Object> configurationParameters;
 
 	private static final Logger LOGGER = Logger.getLogger(HTML2DOCXConverter.class.getName());
 
@@ -51,7 +50,7 @@ public class HTML2DOCXConverter extends AbstractBaseConverter {
 	 * @param paramConfigurationParameters the param configuration parameters
 	 */
 	public HTML2DOCXConverter(Map<String, Object> paramConfigurationParameters) {
-		configurationParameters = paramConfigurationParameters;
+		super(paramConfigurationParameters);
 	}
 
 	/**
@@ -136,10 +135,10 @@ public class HTML2DOCXConverter extends AbstractBaseConverter {
 
 			// we need to create the target PDF
 			// we'll create one page per input string, but we call layout for the first
-			if (configurationParameters != null
-					&& configurationParameters.containsKey(ConfigurationParameterConstants.BASE_DIRECTORY_URL)) {
+			if (getConfigurationParameters() != null
+					&& getConfigurationParameters().containsKey(ConfigurationParameterConstants.BASE_DIRECTORY_URL)) {
 				wordMLPackage.getMainDocumentPart().getContent().addAll(xhtmlImporter.convert(xhtmlString,
-						(String) configurationParameters.get(ConfigurationParameterConstants.BASE_DIRECTORY_URL)));
+						(String) getConfigurationParameters().get(ConfigurationParameterConstants.BASE_DIRECTORY_URL)));
 			} else {
 				String baseUrl = Paths.get("").toFile().toURI().toURL().toString();
 				wordMLPackage.getMainDocumentPart().getContent().addAll(xhtmlImporter.convert(xhtmlString, baseUrl));
@@ -161,14 +160,6 @@ public class HTML2DOCXConverter extends AbstractBaseConverter {
 		}
 	}
 
-	private String getConfiguredCharset() {
-		String charsetConfigured = (String) configurationParameters
-				.get(ConfigurationParameterConstants.INPUT_CHARSET_KEY);
-		// set default value for charsets
-		if (charsetConfigured == null)
-			charsetConfigured = "utf-8";
-		return charsetConfigured;
-	}
 
 	/**
 	 * Checks if is input type is supported.

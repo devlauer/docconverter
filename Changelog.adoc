@@ -1,6 +1,7 @@
 = Changelog
 
 .unreleased
+* refactor methods in converters
 * deduplicate converter code with a common parent class
 * switch to java 8 as compiler version
 * add maven parent elnarion-parent-pom

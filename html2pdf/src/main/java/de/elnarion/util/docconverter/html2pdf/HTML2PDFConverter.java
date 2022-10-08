@@ -29,7 +29,6 @@ public class HTML2PDFConverter extends AbstractBaseConverter {
 
 	private static Map<String, Set<String>> supportedMimetypes = null;
 
-	private Map<String, Object> configurationParameters;
 
 	/**
 	 * Instantiates a new HTML 2 PDF converter.
@@ -37,7 +36,7 @@ public class HTML2PDFConverter extends AbstractBaseConverter {
 	 * @param paramConfigurationParameters the param configuration parameters
 	 */
 	public HTML2PDFConverter(Map<String, Object> paramConfigurationParameters) {
-		configurationParameters = paramConfigurationParameters;
+		super(paramConfigurationParameters);
 	}
 
 	/**
@@ -105,10 +104,10 @@ public class HTML2PDFConverter extends AbstractBaseConverter {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		// we need to create the target PDF
 		// we'll create one page per input string, but we call layout for the first
-		if (configurationParameters != null
-				&& configurationParameters.containsKey(ConfigurationParameterConstants.BASE_DIRECTORY_URL)) {
+		if (getConfigurationParameters() != null
+				&& getConfigurationParameters().containsKey(ConfigurationParameterConstants.BASE_DIRECTORY_URL)) {
 			renderer.setDocumentFromString(xhtmlString,
-					(String) configurationParameters.get(ConfigurationParameterConstants.BASE_DIRECTORY_URL));
+					(String) getConfigurationParameters().get(ConfigurationParameterConstants.BASE_DIRECTORY_URL));
 		} else {
 			renderer.setDocumentFromString(xhtmlString);
 		}
@@ -117,16 +116,6 @@ public class HTML2PDFConverter extends AbstractBaseConverter {
 		renderer.finishPDF();
 		return new ByteArrayInputStream(baos.toByteArray());
 	}
-
-	private String getConfiguredCharset() {
-		String charsetConfigured = (String) configurationParameters
-				.get(ConfigurationParameterConstants.INPUT_CHARSET_KEY);
-		// set default value for charsets
-		if (charsetConfigured == null)
-			charsetConfigured = "utf-8";
-		return charsetConfigured;
-	}
-
 
 	/**
 	 * Checks if is input type is supported.

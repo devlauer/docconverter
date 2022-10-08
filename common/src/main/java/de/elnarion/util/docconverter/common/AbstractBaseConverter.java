@@ -6,11 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import de.elnarion.util.docconverter.api.ConfigurationParameterConstants;
 import de.elnarion.util.docconverter.api.exception.ConversionException;
 import de.elnarion.util.docconverter.spi.DocConverter;
 
@@ -19,6 +21,12 @@ import de.elnarion.util.docconverter.spi.DocConverter;
  */
 public abstract class AbstractBaseConverter implements DocConverter {
 
+	private Map<String, Object> configurationParameters;
+
+	protected AbstractBaseConverter(Map<String, Object> paramConfigurationParameters) {
+		configurationParameters = paramConfigurationParameters;
+	}
+	
 	/**
 	 * Convert streams.
 	 *
@@ -65,6 +73,24 @@ public abstract class AbstractBaseConverter implements DocConverter {
 		} catch (FileNotFoundException e) {
 			throw new ConversionException("File could not be read. Please check file!");
 		}
+	}
+
+	protected String getConfiguredCharset() {
+		String charsetConfigured = (String) getConfigurationParameters()
+				.get(ConfigurationParameterConstants.INPUT_CHARSET_KEY);
+		// set default value for charsets
+		if (charsetConfigured == null)
+			charsetConfigured = "utf-8";
+		return charsetConfigured;
+	}
+	
+	/**
+	 * Gets the configuration parameters.
+	 *
+	 * @return the configuration parameters
+	 */
+	protected Map<String, Object>  getConfigurationParameters(){
+		return configurationParameters;
 	}
 
 	/**

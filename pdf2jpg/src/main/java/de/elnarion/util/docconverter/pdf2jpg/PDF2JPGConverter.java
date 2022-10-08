@@ -36,6 +36,7 @@ public class PDF2JPGConverter extends AbstractBaseConverter {
 	 * @param paramConfigurationParameters the param configuration parameters
 	 */
 	public PDF2JPGConverter(Map<String, Object> paramConfigurationParameters) {
+		super(paramConfigurationParameters);
 	}
 
 	/**
@@ -95,5 +96,6 @@ public class PDF2JPGConverter extends AbstractBaseConverter {
 			return false;
 		}
 	}
+
 
 }
