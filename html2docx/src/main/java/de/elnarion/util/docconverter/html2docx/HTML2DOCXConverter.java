@@ -2,9 +2,6 @@ package de.elnarion.util.docconverter.html2docx;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -15,10 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,13 +31,13 @@ import org.jsoup.nodes.Document;
 import de.elnarion.util.docconverter.api.ConfigurationParameterConstants;
 import de.elnarion.util.docconverter.api.MimeTypeConstants;
 import de.elnarion.util.docconverter.api.exception.ConversionException;
-import de.elnarion.util.docconverter.spi.DocConverter;
+import de.elnarion.util.docconverter.common.AbstractBaseConverter;
 import de.elnarion.util.docconverter.spi.InputType;
 
 /**
  * The Class HTML2DOCXConverter.
  */
-public class HTML2DOCXConverter implements DocConverter {
+public class HTML2DOCXConverter extends AbstractBaseConverter {
 
 	private static Map<String, Set<String>> supportedMimetypes = null;
 
@@ -80,21 +73,6 @@ public class HTML2DOCXConverter implements DocConverter {
 		return supportedMimetypes;
 	}
 
-	@Override
-	public Future<List<InputStream>> convertStreams(final List<InputStream> source, final String paramSourceMimeType,
-			String paramTargetMimeType) throws ConversionException {
-		ExecutorService exec = Executors.newSingleThreadExecutor();
-		return exec.submit(new Callable<List<InputStream>>() {
-			@Override
-			public List<InputStream> call() throws Exception {
-				List<InputStream> resultList = new ArrayList<>();
-				for (InputStream is : source) {
-					resultList.add(convertToInputStream(is, paramSourceMimeType));
-				}
-				return resultList;
-			}
-		});
-	}
 
 	/**
 	 * Convert to output stream.
@@ -104,15 +82,15 @@ public class HTML2DOCXConverter implements DocConverter {
 	 * @return the output stream
 	 * @throws ConversionException the conversion exception
 	 */
-	private InputStream convertToInputStream(InputStream source, String paramSourceMimeType)
+	protected List<InputStream> convertToInputStream(InputStream source, String paramSourceMimeType)
 			throws ConversionException {
-
+		List<InputStream> resultStreams = new ArrayList<>();
 		if (MimeTypeConstants.APPLICATION_XHTML.equals(paramSourceMimeType)) {
-			return convertXHTMLToDocxInputStream(source);
+			resultStreams.add(convertXHTMLToDocxInputStream(source));
 		} else if (MimeTypeConstants.TEXT_HTML.equals(paramSourceMimeType)) {
-			return convertHTMLToDocxInputStream(source);
+			resultStreams.add(convertHTMLToDocxInputStream(source));
 		}
-		return null;
+		return resultStreams;
 	}
 
 	private InputStream convertHTMLToDocxInputStream(InputStream paramSource) throws ConversionException {
@@ -190,20 +168,6 @@ public class HTML2DOCXConverter implements DocConverter {
 		if (charsetConfigured == null)
 			charsetConfigured = "utf-8";
 		return charsetConfigured;
-	}
-
-	@Override
-	public Future<List<InputStream>> convertFiles(List<File> source, String paramSourceMimeType,
-			String paramTargetMimeType) throws ConversionException {
-		try {
-			List<InputStream> isList = new ArrayList<>();
-			for (File sourceFile : source) {
-				isList.add(new FileInputStream(sourceFile));
-			}
-			return convertStreams(isList, paramSourceMimeType, paramTargetMimeType);
-		} catch (FileNotFoundException e) {
-			throw new ConversionException("File could not be read. Please check file!");
-		}
 	}
 
 	/**

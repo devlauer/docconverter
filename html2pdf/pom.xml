@@ -13,7 +13,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.elnarion.util</groupId>
-			<artifactId>docconverter-api</artifactId>
+			<artifactId>docconverter-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

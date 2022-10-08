@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>docconverter-pdf2jpg</artifactId>
+	<artifactId>docconverter-common</artifactId>
 	<packaging>jar</packaging>
 
 	<parent>
@@ -13,19 +13,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.elnarion.util</groupId>
-			<artifactId>docconverter-common</artifactId>
+			<artifactId>docconverter-api</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>de.elnarion.util</groupId>
-			<artifactId>docconverter-testsupport</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.pdfbox</groupId>
-			<artifactId>pdfbox-tools</artifactId>
-			<version>3.0.0-RC1</version>
 		</dependency>
 	</dependencies>
 </project>

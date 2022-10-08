@@ -64,6 +64,7 @@
 
 	<modules>
 		<module>api</module>
+		<module>common</module>		
 		<module>testsupport</module>
 		<module>html2pdf</module>
 		<module>html2docx</module>

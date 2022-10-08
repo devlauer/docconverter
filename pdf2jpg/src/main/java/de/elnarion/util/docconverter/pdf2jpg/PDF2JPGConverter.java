@@ -3,8 +3,6 @@ package de.elnarion.util.docconverter.pdf2jpg;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -13,10 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -26,13 +20,13 @@ import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 
 import de.elnarion.util.docconverter.api.MimeTypeConstants;
 import de.elnarion.util.docconverter.api.exception.ConversionException;
-import de.elnarion.util.docconverter.spi.DocConverter;
+import de.elnarion.util.docconverter.common.AbstractBaseConverter;
 import de.elnarion.util.docconverter.spi.InputType;
 
 /**
  * The Class PDF2JPGConverter.
  */
-public class PDF2JPGConverter implements DocConverter {
+public class PDF2JPGConverter extends AbstractBaseConverter {
 
 	private static Map<String, Set<String>> supportedMimetypes = null;
 
@@ -62,23 +56,8 @@ public class PDF2JPGConverter implements DocConverter {
 		return supportedMimetypes;
 	}
 
-	@Override
-	public Future<List<InputStream>> convertStreams(final List<InputStream> source, final String paramSourceMimeType,
-			String paramTargetMimeType) throws ConversionException {
-		ExecutorService exec = Executors.newSingleThreadExecutor();
-		return exec.submit(new Callable<List<InputStream>>() {
-			@Override
-			public List<InputStream> call() throws Exception {
-				List<InputStream> resultList = new ArrayList<>();
-				for (InputStream is : source) {
-					resultList.addAll(convertToInputStream(is));
-				}
-				return resultList;
-			}
-		});		
-	}
 
-	private List<InputStream> convertToInputStream(InputStream source) throws ConversionException {
+	protected List<InputStream> convertToInputStream(InputStream source,String paramSourceMimeType) throws ConversionException {
 		ByteArrayOutputStream baos;
 		List<InputStream> resultList = new ArrayList<>();
 		try {
@@ -99,21 +78,6 @@ public class PDF2JPGConverter implements DocConverter {
 		return resultList;
 	}
 
-	@Override
-	public Future<List<InputStream>> convertFiles(final List<File> source, final String paramSourceMimeType,
-			String paramTargetMimeType) throws ConversionException {
-		ExecutorService exec = Executors.newSingleThreadExecutor();
-		return exec.submit(new Callable<List<InputStream>>() {
-			@Override
-			public List<InputStream> call() throws Exception {
-				List<InputStream> resultList = new ArrayList<>();
-				for (File is : source) {
-					resultList.addAll(convertToInputStream(new FileInputStream(is)));
-				}
-				return resultList;
-			}
-		});		
-	}
 
 	/**
 	 * Checks if is input type is supported.
