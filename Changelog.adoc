@@ -1,7 +1,11 @@
 = Changelog
 
 .unreleased
-* nothing
+* fixed several SonarQube hints
+* updated indirect dependency logback-classic to 1.4.3
+* updated indirect dependency logback-core to 1.4.3
+* updated indirect dependency xercesImpl to 2.12.2
+* updated indirect dependency commons-codec to 1.15
 
 
 .1.0.1 - 2022-09-25
