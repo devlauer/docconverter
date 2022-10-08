@@ -1,5 +1,6 @@
 package de.elnarion.util.docconverter.spi;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -90,7 +91,7 @@ public class DocConverterManager implements DocConverterManagerInterface {
 			String paramSourceMimeType) {
 		if (paramSourceMimeType != null)
 			return docConverterProviderMap.get(paramSourceMimeType);
-		return null;
+		return Collections.emptyMap();
 	}
 
 }

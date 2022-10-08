@@ -7,17 +7,17 @@ import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.PreprocessorReader;
 
 /**
- * The Class Preprocessor uses the asciidoc extension mechanism to extract all
+ * The Class DocConverterPreprocessor uses the asciidoc extension mechanism to extract all
  * asciidoc file contents as a list of strings.
  */
-public class Preprocessor extends org.asciidoctor.extension.Preprocessor {
+public class DocConverterPreprocessor extends org.asciidoctor.extension.Preprocessor {
 
 	private List<String> contentLines;
 
 	/**
 	 * Instantiates a new preprocessor.
 	 */
-	public Preprocessor() {
+	public DocConverterPreprocessor() {
 	}
 
 	/**
@@ -25,7 +25,7 @@ public class Preprocessor extends org.asciidoctor.extension.Preprocessor {
 	 *
 	 * @param config the config
 	 */
-	public Preprocessor(Map<String, Object> config) {
+	public DocConverterPreprocessor(Map<String, Object> config) {
 		super(config);
 	}
 

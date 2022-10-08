@@ -19,7 +19,6 @@ import org.apache.commons.io.IOUtils;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.Asciidoctor.Factory;
 import org.asciidoctor.Options;
-import org.asciidoctor.OptionsBuilder;
 import org.asciidoctor.SafeMode;
 import org.asciidoctor.extension.ExtensionGroup;
 
@@ -111,7 +110,7 @@ public class Adoc2AdocDocConverter implements DocConverter {
 		List<InputStream> inputStreams = new ArrayList<>();
 		Asciidoctor asciidoctor = Factory.create();
 		ExtensionGroup group = asciidoctor.createGroup();
-		Preprocessor preprocessor = new Preprocessor();
+		DocConverterPreprocessor preprocessor = new DocConverterPreprocessor();
 		group.preprocessor(preprocessor);
 		Options options = Options.builder().safe(SafeMode.UNSAFE).toFile(false).build();
 		group.register();
@@ -122,7 +121,7 @@ public class Adoc2AdocDocConverter implements DocConverter {
 	}
 
 	private InputStream processSingleFile(File source, Asciidoctor asciidoctor, ExtensionGroup group,
-			Preprocessor preprocessor, Options options) throws IOException {
+			DocConverterPreprocessor preprocessor, Options options) throws IOException {
 		options.setBaseDir(source.getParentFile().getAbsolutePath());
 		try(FileInputStream fis= new FileInputStream(source))
 		{

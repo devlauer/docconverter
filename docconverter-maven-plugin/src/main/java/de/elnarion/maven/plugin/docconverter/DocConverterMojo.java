@@ -33,6 +33,8 @@ import de.elnarion.util.docconverter.api.exception.ConversionException;
 @Mojo(name = "convert", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true)
 public class DocConverterMojo extends AbstractMojo {
 
+	private static final String CONFIGSETTING = "configsetting";
+
 	/** The Constant PREFIX. */
 	static final String PREFIX = "docconverter.";
 
@@ -135,7 +137,9 @@ public class DocConverterMojo extends AbstractMojo {
 							"Writing result of " + sourceDocument2.getName() + " to " + targetFile.getAbsolutePath());
 					counter++;
 					counterString = "" + counter;
-					IOUtils.copy(in, new FileOutputStream(targetFile));
+					try (FileOutputStream targetStream = new FileOutputStream(targetFile)) {
+						IOUtils.copy(in, targetStream);
+					}
 				}
 			} catch (InterruptedException e) {
 				getLog().warn("Thread has been interrupted.", e);
@@ -208,7 +212,7 @@ public class DocConverterMojo extends AbstractMojo {
 	 * @throws ConversionException the conversion exception
 	 */
 	private Future<List<InputStream>> convertFile(File paramSourceDocument) throws ConversionException {
-		getLog().debug("configsetting");
+		getLog().debug(CONFIGSETTING);
 		ConversionJobWithInputUnspecified conversionJob = null;
 		Map<String, Object> config = new HashMap<>();
 		if (conversionParameters != null) {
@@ -218,13 +222,13 @@ public class DocConverterMojo extends AbstractMojo {
 		getLog().debug("configsetting update");
 		if (config.containsKey(ConfigurationParameterConstants.BASE_DIRECTORY_URL)) {
 			String directory = (String) config.get(ConfigurationParameterConstants.BASE_DIRECTORY_URL);
-			getLog().debug("configsetting" + directory);
-			config.put(ConfigurationParameterConstants.BASE_DIRECTORY_URL, directory.replaceAll("\\", "/"));
+			getLog().debug(CONFIGSETTING + directory);
+			config.put(ConfigurationParameterConstants.BASE_DIRECTORY_URL, directory.replace("\\\\", "/"));
 			getLog().debug(
 					"Fixed base directory URL to " + config.get(ConfigurationParameterConstants.BASE_DIRECTORY_URL));
 		} else if (paramSourceDocument != null) {
 			try {
-				getLog().debug("configsetting" + paramSourceDocument.getParentFile().toURI().toURL());
+				getLog().debug(CONFIGSETTING + paramSourceDocument.getParentFile().toURI().toURL());
 				config.put(ConfigurationParameterConstants.BASE_DIRECTORY_URL,
 						paramSourceDocument.getParentFile().toURI().toURL().toString());
 			} catch (MalformedURLException e) {
