@@ -1,6 +1,8 @@
 = Changelog
 
 .unreleased
+
+.1.0.2 - 2022-10-12
 * refactor methods in converters
 * deduplicate converter code with a common parent class
 * switch to java 8 as compiler version
