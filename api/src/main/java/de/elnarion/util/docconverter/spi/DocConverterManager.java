@@ -56,12 +56,7 @@ public class DocConverterManager implements DocConverterManagerInterface {
 			if (supportedMimetypesByDocProvider != null) {
 				Set<String> sourceMimeTypeSet = supportedMimetypesByDocProvider.keySet();
 				for (String sourceMimeType : sourceMimeTypeSet) {
-					Map<DocConverterProvider, Set<String>> providerTargetMapping = currentDocConverterProviderMap.get(sourceMimeType);
-					if(providerTargetMapping==null)
-					{
-						providerTargetMapping = new HashMap<>();
-						currentDocConverterProviderMap.put(sourceMimeType, providerTargetMapping);
-					}
+					Map<DocConverterProvider, Set<String>> providerTargetMapping = currentDocConverterProviderMap.computeIfAbsent(sourceMimeType, k -> new HashMap<>());
 					providerTargetMapping.put(provider, supportedMimetypesByDocProvider.get(sourceMimeType));
 				}
 			}

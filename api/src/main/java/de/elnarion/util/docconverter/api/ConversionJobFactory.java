@@ -141,7 +141,7 @@ public class ConversionJobFactory {
 	 * @return the conversion job with source doc type unspecified
 	 */
 	public ConversionJobWithInputUnspecified createEmptyConversionJob() {
-		return new ConversionJobImpl(DocConverterManager.getInstance(), new HashMap<String,Object>());
+		return new ConversionJobImpl(DocConverterManager.getInstance(), new HashMap<>());
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class ConversionJobFactory {
 	 * @return the conversion job with source doc type unspecified
 	 */
 	public ConversionJobWithInputUnspecified createEmptyConversionJob(ClassLoader paramClassLoader) {
-		return new ConversionJobImpl(DocConverterManager.getInstance(paramClassLoader), new HashMap<String,Object>());
+		return new ConversionJobImpl(DocConverterManager.getInstance(paramClassLoader), new HashMap<>());
 	}
 
 	/**

@@ -105,45 +105,44 @@ public class Adoc2AdocDocConverter implements DocConverter {
 		});
 	}
 
-	private List<InputStream> convertToInputStreams(List<File> source)
-			throws IOException {
+	private List<InputStream> convertToInputStreams(List<File> source) throws IOException {
 		List<InputStream> inputStreams = new ArrayList<>();
-		Asciidoctor asciidoctor = Factory.create();
-		ExtensionGroup group = asciidoctor.createGroup();
-		DocConverterPreprocessor preprocessor = new DocConverterPreprocessor();
-		group.preprocessor(preprocessor);
-		Options options = Options.builder().safe(SafeMode.UNSAFE).toFile(false).build();
-		group.register();
-		for (File file : source) {
-			inputStreams.add(processSingleFile(file, asciidoctor, group, preprocessor, options));
+		try (Asciidoctor asciidoctor = Factory.create()) {
+			ExtensionGroup group = asciidoctor.createGroup();
+			DocConverterPreprocessor preprocessor = new DocConverterPreprocessor();
+			group.preprocessor(preprocessor);
+			Options options = Options.builder().safe(SafeMode.UNSAFE).toFile(false).build();
+			group.register();
+			for (File file : source) {
+				inputStreams.add(processSingleFile(file, asciidoctor, group, preprocessor, options));
+			}
+			return inputStreams;
 		}
-		return inputStreams;
 	}
 
 	private InputStream processSingleFile(File source, Asciidoctor asciidoctor, ExtensionGroup group,
 			DocConverterPreprocessor preprocessor, Options options) throws IOException {
 		options.setBaseDir(source.getParentFile().getAbsolutePath());
-		try(FileInputStream fis= new FileInputStream(source))
-		{
-		List<String> content = IOUtils.readLines(fis, getConfiguredCharset());
-		StringBuilder contentBuilder = new StringBuilder();
-		for (String contentline : content) {
-			if (contentline.contains(INCLUDE) && shouldIncludeStatementRemain(contentline))
-				contentline = contentline.replace(INCLUDE, "include##");
-			contentBuilder.append(contentline);
-			contentBuilder.append("\r\n");
-		}
-		asciidoctor.convert(contentBuilder.toString(), options);
-		group.unregister();
-		List<String> lines = preprocessor.getContentLines();
-		StringBuilder newContentBuilder = new StringBuilder();
-		for (String line : lines) {
-			line = line.replace("include##", INCLUDE);
-			newContentBuilder.append(line);
-			newContentBuilder.append(System.lineSeparator());
-		}
-		
-		return IOUtils.toInputStream(newContentBuilder.toString(), getConfiguredCharset());
+		try (FileInputStream fis = new FileInputStream(source)) {
+			List<String> content = IOUtils.readLines(fis, getConfiguredCharset());
+			StringBuilder contentBuilder = new StringBuilder();
+			for (String contentline : content) {
+				if (contentline.contains(INCLUDE) && shouldIncludeStatementRemain(contentline))
+					contentline = contentline.replace(INCLUDE, "include##");
+				contentBuilder.append(contentline);
+				contentBuilder.append("\r\n");
+			}
+			asciidoctor.convert(contentBuilder.toString(), options);
+			group.unregister();
+			List<String> lines = preprocessor.getContentLines();
+			StringBuilder newContentBuilder = new StringBuilder();
+			for (String line : lines) {
+				line = line.replace("include##", INCLUDE);
+				newContentBuilder.append(line);
+				newContentBuilder.append(System.lineSeparator());
+			}
+
+			return IOUtils.toInputStream(newContentBuilder.toString(), getConfiguredCharset());
 		}
 	}
 
