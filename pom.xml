@@ -49,7 +49,6 @@
 		<connection>scm:git:ssh://git@github.com/devlauer/docconverter.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/devlauer/docconverter.git</developerConnection>
 		<url>https://github.com/devlauer/docconverter/tree/master</url>
-		<tag>HEAD</tag>
 	</scm>
 
 	<distributionManagement>
