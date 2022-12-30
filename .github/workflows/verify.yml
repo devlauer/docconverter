@@ -1,0 +1,66 @@
+name: Verify source code changes
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '8' ]   
+    name: Verify source code changes on Java ${{ matrix.Java }} 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Get changed source files or maven poms of all modules
+      id: changed-files-specific
+      uses: tj-actions/changed-files@v35
+      with:
+        files: |
+          pom.xml
+          .mvn/**
+          .github/workflows/verify.yml
+          adoc2adoc/pom.xml
+          adoc2adoc/src/main/**
+          adoc2adoc/src/test/**
+          all/pom.xml
+          api/pom.xml
+          api/src/main/**
+          common/pom.xml
+          common/src/main/**
+          common/src/test/**
+          docconverter-maven-plugin/pom.xml
+          docconverter-maven-plugin/src/main/**
+          docconverter-maven-plugin/src/test/**
+          html2docx/pom.xml
+          html2docx/src/main/java/**
+          html2docx/src/test/java/**
+          html2pdf/pom.xml
+          html2pdf/src/main/java/**
+          html2pdf/src/test/java/**
+          pdf2jpg/pom.xml
+          pdf2jpg/src/main/java/**
+          pdf2jpg/src/test/java/**
+          testsupport/pom.xml
+          testsupport/src/main/java/**
+    - name: Set up JDK
+      if: steps.changed-files-specific.outputs.any_changed == 'true'
+      uses: actions/setup-java@v3      
+      with:
+        distribution: 'temurin'
+        java-version: ${{ matrix.java }}
+        cache: 'maven'
+    - name: Analyze with SonarCloud
+      if: ${{steps.changed-files-specific.outputs.any_changed == 'true' && github.event_name != 'pull_request'}}
+      run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.coverage.jacoco.xmlReportPaths=\${project.build.directory}/site/jacoco/jacoco.xml -Dsonar.projectKey=devlauer_plantuml-generator -Dsonar.login=$SONAR_TOKEN
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}        
+    - name: Verify via Maven without SonarCloud
+      if: ${{steps.changed-files-specific.outputs.any_changed == 'true' && github.event_name == 'pull_request'}}
+      run: ./mvnw -B verify 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
