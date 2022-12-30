@@ -1,5 +1,13 @@
 = docconverter project
 
+image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=ncloc["Lines of Code", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
+image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=security_rating["Security Rating", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
+image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=vulnerabilities["Vulnerabilities", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
+image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=sqale_rating["Maintainability Rating", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
+image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=coverage["Coverage", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
+image:https://github.com/devlauer/docconverter/actions/workflows/verify.yml/badge.svg["mvn verify"]
+
+
 == Description 
 
 docconverter is a universal Java library which helps to convert 
