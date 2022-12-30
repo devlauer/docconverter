@@ -1,7 +1,7 @@
 package de.elnarion.util.doconverter.adoc2adoc;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.elnarion.util.docconverter.adoc2adoc.Adoc2AdocDocConverter;
 import de.elnarion.util.docconverter.api.MimeTypeConstants;
@@ -23,7 +23,7 @@ import de.elnarion.util.docconverter.api.exception.ConversionException;
 /**
  * The Class Adoc2AdocDocConverterIT.
  */
-public class Adoc2AdocDocConverterIT {
+class Adoc2AdocDocConverterIT {
 
 	/**
 	 * Test adoc 2 adoc conversion.
@@ -34,7 +34,7 @@ public class Adoc2AdocDocConverterIT {
 	 * @throws IOException
 	 */
 	@Test
-	public void testAdoc2AdocConversion()
+	void testAdoc2AdocConversion()
 			throws ConversionException, InterruptedException, ExecutionException, IOException {
 		Map<String, Object> config = new HashMap<>();
 		config.put(Adoc2AdocDocConverter.REGEXP_REMAIN_INCLUDE_STATEMENT, ".*include\\:\\:\\.\\/.*\\[\\].*");

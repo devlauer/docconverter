@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.elnarion.util.docconverter.api.ConversionJobFactory;
 import de.elnarion.util.docconverter.api.MimeTypeConstants;
@@ -19,7 +19,7 @@ import de.elnarion.util.docconverter.spi.testsupport.BasicDocConverterIT;
 /**
  * The integration test class for HTML2PDFConverter.
  */
-public class HTML2PDFConverterIT extends BasicDocConverterIT {
+class HTML2PDFConverterIT extends BasicDocConverterIT {
 
 	/**
 	 * Test convert XHTML with a sample xhtml file.
@@ -30,7 +30,7 @@ public class HTML2PDFConverterIT extends BasicDocConverterIT {
 	 * @throws IOException
 	 */
 	@Test
-	public void testConvertXHTML() throws InterruptedException, ExecutionException, ConversionException, IOException {
+	void testConvertXHTML() throws InterruptedException, ExecutionException, ConversionException, IOException {
 		HTML2PDFConverter converter = new HTML2PDFConverter(new HashMap<String,Object>());
 		InputStream input = this.getClass().getClassLoader().getResourceAsStream("test.xhtml");
 		List<InputStream> inputList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class HTML2PDFConverterIT extends BasicDocConverterIT {
 	 * @throws IOException
 	 */
 	@Test
-	public void testConvertHTML() throws ConversionException, InterruptedException, ExecutionException, IOException {
+	void testConvertHTML() throws ConversionException, InterruptedException, ExecutionException, IOException {
 		HTML2PDFConverter converter = new HTML2PDFConverter(new HashMap<String,Object>());
 		InputStream input = this.getClass().getClassLoader().getResourceAsStream("test.html");
 		List<InputStream> inputList = new ArrayList<>();
@@ -70,7 +70,7 @@ public class HTML2PDFConverterIT extends BasicDocConverterIT {
 	 * @throws IOException          Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testConvertXHTMLViaSPI()
+	void testConvertXHTMLViaSPI()
 			throws ConversionException, InterruptedException, ExecutionException, IOException {
 		InputStream input = this.getClass().getClassLoader().getResourceAsStream("test.xhtml");
 		List<InputStream> inputList = new ArrayList<>();

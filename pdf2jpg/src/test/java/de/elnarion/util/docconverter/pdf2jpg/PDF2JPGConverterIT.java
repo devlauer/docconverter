@@ -1,7 +1,7 @@
 package de.elnarion.util.docconverter.pdf2jpg;
 
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.apache.pdfbox.io.IOUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.elnarion.util.docconverter.api.ConversionJobFactory;
 import de.elnarion.util.docconverter.api.MimeTypeConstants;
@@ -22,7 +22,7 @@ import de.elnarion.util.docconverter.spi.testsupport.BasicDocConverterIT;
 /**
  * The Class PDF2JPGConverterIT.
  */
-public class PDF2JPGConverterIT extends BasicDocConverterIT {
+class PDF2JPGConverterIT extends BasicDocConverterIT {
 
 	/**
 	 * Test pdf 2 jpg conversion.
@@ -33,7 +33,7 @@ public class PDF2JPGConverterIT extends BasicDocConverterIT {
 	 * @throws IOException          Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testPdf2JpgConversion()
+	void testPdf2JpgConversion()
 			throws ConversionException, InterruptedException, ExecutionException, IOException {
 		PDF2JPGConverter converter = new PDF2JPGConverter(new HashMap<String,Object>());
 		List<InputStream> inputStreams = new ArrayList<>();
@@ -57,7 +57,7 @@ public class PDF2JPGConverterIT extends BasicDocConverterIT {
 	 * @throws IOException          Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testConvertPdf2JpgViaSPI()
+	void testConvertPdf2JpgViaSPI()
 			throws ConversionException, InterruptedException, ExecutionException, IOException {
 		List<InputStream> inputList = new ArrayList<>();
 		inputList.add(this.getClass().getClassLoader().getResourceAsStream("dummy.pdf"));
