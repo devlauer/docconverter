@@ -28,29 +28,6 @@
 		<url>https://github.com/devlauer/docconverter/issues</url>
 	</issueManagement>
 
-	<developers>
-		<developer>
-			<id>devlauer</id>
-			<name>Lauer</name>
-			<email>dev.lauer@elnarion.de</email>
-			<url>https://github.com/devlauer</url>
-			<timezone>+1:00</timezone>
-		</developer>
-	</developers>
-
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
-
-	<scm>
-		<connection>scm:git:ssh://git@github.com/devlauer/docconverter.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/devlauer/docconverter.git</developerConnection>
-		<url>https://github.com/devlauer/docconverter/tree/master</url>
-	</scm>
-
 	<modules>
 		<module>api</module>
 		<module>common</module>		
@@ -71,5 +48,11 @@
 			<scope>test</scope>
 		</dependency>		
 	</dependencies>
+
+	<scm>
+		<connection>scm:git:ssh://git@github.com/devlauer/docconverter.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/devlauer/docconverter.git</developerConnection>
+		<url>https://github.com/devlauer/docconverter/tree/master</url>
+	</scm>
 
 </project>
