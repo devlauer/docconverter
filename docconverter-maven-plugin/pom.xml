@@ -3,18 +3,15 @@
 	<groupId>de.elnarion.maven</groupId>
 	<artifactId>docconverter-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-
 	<parent>
 		<groupId>de.elnarion.util</groupId>
 		<artifactId>docconverter</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-
 	<properties>
-		<mavenVersion>3.3.9</mavenVersion>
+		<mavenVersion>3.6.0</mavenVersion>
 	</properties>
-
 	<dependencies>
 		<!-- maven -->
 		<dependency>
@@ -86,7 +83,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -94,7 +90,25 @@
 				<artifactId>maven-plugin-plugin</artifactId>
 				<version>3.7.0</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>${mavenVersion}</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
