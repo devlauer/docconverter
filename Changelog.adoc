@@ -1,6 +1,28 @@
 = Changelog
 
 .unreleased
+.1.0.4 - 2023-04-15
+* updated dependency asciidoctorj to 2.5.8
+
+.1.0.3 - 2023-04-15
+* updated indirect depencency logback-classic to 1.4.6
+* updated maven to 3.9.1
+* updated maven-wrapper to 3.2.0
+* updated maven-plugin-plugin to 3.8.1
+* updated maven-plugin-annotations to 3.8.1
+* updated jsoup to 1.15.4
+* updated jaxb-impl to 2.3.8
+* updated docx4j-JAXB-ReferenceImpl to 8.3.9
+* updated junit-jupiter to 5.9.2
+* updated parent elnarion-parent-pom
+* fix sonarclout issues
+* use jdk11 as build-runtime
+* updated maven minimum version to 3.6.0
+* added official maven wrapper
+* added renovate
+* switched to junit 5
+* updated maven-verifier to 1.8.0
+* updated commons-io to 2.11.0
 
 .1.0.2 - 2022-10-12
 * refactor methods in converters
