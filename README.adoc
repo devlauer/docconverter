@@ -1,5 +1,7 @@
 = docconverter project
 
+:docconverter-version: 1.0.6
+
 image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=ncloc["Lines of Code", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
 image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=security_rating["Security Rating", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
 image:https://sonarcloud.io/api/project_badges/measure?project=devlauer_docconverter&metric=vulnerabilities["Vulnerabilities", link="https://sonarcloud.io/summary/new_code?id=devlauer_docconverter"]
@@ -46,21 +48,21 @@ the docconverter-html2pdf.jar and its dependencies to your classpath if
 you want to convert from html to pdf.
 
 If you use maven as build tool this is easy, just add the api
-[source, xml]
+[source, xml,subs="attributes,verbatim"]
 ----
 <dependency>
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter-api</artifactId>
-	<version>1.0.5</version>
+	<version>{docconverter-version}</version>
 </dependency>		
 ----
 and the needed implementation, e.g.
-[source, xml]
+[source, xml,subs="attributes,verbatim"]
 ----
 <dependency>
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter-html2pdf</artifactId>
-	<version>1.0.5</version>
+	<version>{docconverter-version}</version>
 </dependency>		
 ----
 to your pom.xml
@@ -91,12 +93,12 @@ add this plugin specific configuration:
   
 For each requested document conversion you need to add the concrete docconverter implementation as plugin dependency.
 
-[source, xml]
+[source, xml,subs="attributes,verbatim"]
 ----
 <plugin>
 	<artifactId>docconverter-maven-plugin</artifactId>
 	<groupId>de.elnarion.maven</groupId>
-	<version>1.0.5</version>
+	<version>{docconverter-version}</version>
 	<executions>
 		<execution>
 			<id>some-id</id>
@@ -117,7 +119,7 @@ For each requested document conversion you need to add the concrete docconverter
 		<dependency>
 			<groupId>de.elnarion.util</groupId>
 			<artifactId>docconverter-someimplementation</artifactId>
-			<version>1.0.5</version>
+			<version>{docconverter-version}</version>
 		</dependency>
 	</dependencies>
   </executions>
@@ -127,7 +129,7 @@ For each requested document conversion you need to add the concrete docconverter
 Here is an example of a Maven project (pom.xml) which uses this maven plugin to convert all 
 xhtml files in the src/main/testfiles folder to pdf files in the target folder target/xhtml2pdf:
 
-[source, xml]
+[source,xml,subs="attributes,verbatim"]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -141,7 +143,7 @@ xhtml files in the src/main/testfiles folder to pdf files in the target folder t
 			<plugin>
 				<artifactId>docconverter-maven-plugin</artifactId>
 				<groupId>de.elnarion.maven</groupId>
-				<version>1.0.5</version>
+				<version>{docconverter-version}</version>
 				<executions>
 					<execution>
 						<id>html2pdf</id>
@@ -181,12 +183,12 @@ xhtml files in the src/main/testfiles folder to pdf files in the target folder t
 					<dependency>
 						<groupId>de.elnarion.util</groupId>
 						<artifactId>docconverter-html2pdf</artifactId>
-						<version>1.0.5</version>
+						<version>{docconverter-version}</version>
 					</dependency>
 					<dependency>
 						<groupId>de.elnarion.util</groupId>
 						<artifactId>docconverter-adoc2adoc</artifactId>
-						<version>1.0.5</version>
+						<version>{docconverter-version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
