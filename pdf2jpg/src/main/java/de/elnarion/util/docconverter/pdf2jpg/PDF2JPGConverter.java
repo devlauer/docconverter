@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
@@ -63,7 +64,7 @@ public class PDF2JPGConverter extends AbstractBaseConverter {
 		List<InputStream> resultList = new ArrayList<>();
 		try {
 			System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-			PDDocument document = Loader.loadPDF(source);
+			PDDocument document = Loader.loadPDF(IOUtils.toByteArray(source));
 			PDFRenderer pdfRenderer = new PDFRenderer(document);
 			for (int page = 0; page < document.getNumberOfPages(); ++page) {
 				baos = new ByteArrayOutputStream();
