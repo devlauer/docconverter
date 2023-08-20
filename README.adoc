@@ -51,7 +51,7 @@ If you use maven as build tool this is easy, just add the api
 <dependency>
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter-api</artifactId>
-	<version>0.9.3</version>
+	<version>1.0.5</version>
 </dependency>		
 ----
 and the needed implementation, e.g.
@@ -60,7 +60,7 @@ and the needed implementation, e.g.
 <dependency>
 	<groupId>de.elnarion.util</groupId>
 	<artifactId>docconverter-html2pdf</artifactId>
-	<version>0.9.3</version>
+	<version>1.0.5</version>
 </dependency>		
 ----
 to your pom.xml
@@ -96,7 +96,7 @@ For each requested document conversion you need to add the concrete docconverter
 <plugin>
 	<artifactId>docconverter-maven-plugin</artifactId>
 	<groupId>de.elnarion.maven</groupId>
-	<version>0.0.9</version>
+	<version>1.0.5</version>
 	<executions>
 		<execution>
 			<id>some-id</id>
@@ -117,9 +117,10 @@ For each requested document conversion you need to add the concrete docconverter
 		<dependency>
 			<groupId>de.elnarion.util</groupId>
 			<artifactId>docconverter-someimplementation</artifactId>
-			<version>0.0.9</version>
+			<version>1.0.5</version>
 		</dependency>
 	</dependencies>
+  </executions>
 </plugin>
 ----
 
@@ -140,7 +141,7 @@ xhtml files in the src/main/testfiles folder to pdf files in the target folder t
 			<plugin>
 				<artifactId>docconverter-maven-plugin</artifactId>
 				<groupId>de.elnarion.maven</groupId>
-				<version>0.0.9-SNAPSHOT</version>
+				<version>1.0.5</version>
 				<executions>
 					<execution>
 						<id>html2pdf</id>
@@ -180,12 +181,12 @@ xhtml files in the src/main/testfiles folder to pdf files in the target folder t
 					<dependency>
 						<groupId>de.elnarion.util</groupId>
 						<artifactId>docconverter-html2pdf</artifactId>
-						<version>0.0.9</version>
+						<version>1.0.5</version>
 					</dependency>
 					<dependency>
 						<groupId>de.elnarion.util</groupId>
 						<artifactId>docconverter-adoc2adoc</artifactId>
-						<version>0.0.9</version>
+						<version>1.0.5</version>
 					</dependency>
 				</dependencies>
 			</plugin>
