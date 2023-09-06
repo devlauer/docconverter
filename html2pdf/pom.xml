@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-pdf-openpdf</artifactId>
-			<version>9.2.1</version>
+			<version>9.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jsoup</groupId>
