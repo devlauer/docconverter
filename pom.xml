@@ -8,7 +8,7 @@
     <groupId>de.elnarion.util</groupId>
     <artifactId>docconverter</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.7</version>
+    <version>1.0.8-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>library and maven plugin project for document conversion</description>
     <url>https://github.com/devlauer/docconverter</url>
@@ -71,6 +71,6 @@
         <connection>scm:git:ssh://git@github.com/devlauer/docconverter.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/devlauer/docconverter.git</developerConnection>
         <url>https://github.com/devlauer/docconverter/tree/master</url>
-      <tag>docconverter-1.0.7</tag>
+      <tag>HEAD</tag>
   </scm>
 </project>
