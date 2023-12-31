@@ -1,6 +1,8 @@
 = Changelog
 
 .unreleased
+
+.1.0.8/1.0.9 - 2023-12-31
 * update poi-ooxml to 5.2.5
 * update flying-saucer-pdf-openpdf to 9.4.0
 * update logback-classic to 1.4.14
