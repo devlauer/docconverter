@@ -2,6 +2,12 @@
 
 .unreleased
 
+.1.0.10 - 2024-01-14
+* fix upload to maven central for all modules
+* update maven-plugin-annotations to 3.11.0
+* update maven-plugin-plugin to 3.11.0
+* update elnarion-parent-pom to 2.0.11
+
 .1.0.8/1.0.9 - 2023-12-31
 * update poi-ooxml to 5.2.5
 * update flying-saucer-pdf-openpdf to 9.4.0
