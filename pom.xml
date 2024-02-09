@@ -51,7 +51,7 @@
                     <toolchains>
                         <!-- this project needs a JDK toolchain, version 15 -->
                         <jdk>
-                            <version>11</version>
+                            <version>17</version>
                         </jdk>
                     </toolchains>
                 </configuration>
