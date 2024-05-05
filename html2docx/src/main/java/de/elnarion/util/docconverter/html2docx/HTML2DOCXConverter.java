@@ -102,12 +102,12 @@ public class HTML2DOCXConverter extends AbstractBaseConverter {
 		}
 		document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
 		String xhtmlString = document.html();
-		ByteArrayInputStream bais = new ByteArrayInputStream(xhtmlString.getBytes());
-		return convertXHTMLToDocxInputStream(bais);
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(xhtmlString.getBytes());
+		return convertXHTMLToDocxInputStream(byteArrayInputStream);
 	}
 
 	private InputStream convertXHTMLToDocxInputStream(InputStream paramSource) throws ConversionException {
-		String xhtmlString = null;
+		String xhtmlString;
 		try {
 			xhtmlString = IOUtils.toString(paramSource, getConfiguredCharset());
 		} catch (IOException e) {
@@ -149,11 +149,11 @@ public class HTML2DOCXConverter extends AbstractBaseConverter {
 						XmlUtils.marshaltoString(wordMLPackage.getMainDocumentPart().getJaxbElement(), true, true));
 			}
 
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-			wordMLPackage.save(baos);
+			wordMLPackage.save(byteArrayOutputStream);
 
-			return new ByteArrayInputStream(baos.toByteArray());
+			return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
 		} catch (Docx4JException | MalformedURLException | JAXBException e) {
 			throw new ConversionException(
 					"Conversion is not possible due to an internal exception. Error message is " + e.getMessage(), e);
@@ -170,8 +170,7 @@ public class HTML2DOCXConverter extends AbstractBaseConverter {
 	public static boolean isInputTypeSupported(InputType paramInputType) {
 		switch (paramInputType) {
 		case FILE:
-			return true;
-		case INPUTSTREAM:
+			case INPUTSTREAM:
 			return true;
 		default:
 			return false;
